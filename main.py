@@ -105,9 +105,11 @@ def create_title(title, pdf):
     # Add date of report
     pdf.set_font('Helvetica', '', 14)
     pdf.set_text_color(r=128,g=128,b=128)
+    #--------------------------------------------------------------------------------------- TO DO
+    # change to use day of the folder instead of today
     today = datetime.now()
     week_ago = (today - timedelta(days=7))
-    timePeriod = week_ago.strftime("%d/%m/%Y") + " - " + today.strftime("%d/%m/%Y")
+    timePeriod = week_ago.strftime("%m/%d/%Y") + " - " + today.strftime("%m/%d/%Y")
     pdf.write(4, timePeriod)
     # Add line break
     pdf.ln(10)
