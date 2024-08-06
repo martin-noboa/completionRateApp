@@ -1,0 +1,2 @@
+- Completed items take only "happy path" into consideration, i.e. successfully handled business exceptions are still marked as exceptions.
+- CrowdStrike update crashed Windows systems. Encompass was heavily affected, with outage from 07/19 to 07/20. 
