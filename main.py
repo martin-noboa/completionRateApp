@@ -12,7 +12,7 @@ WIDTH = 210
 HEIGHT = 297
 
 def check_completion_cls(group):
-    return '8 - All Complete' in group['Status'].values
+    return 'Completed' in group['Status'].values
 def check_completion_cmt(group):
     return 'Complete' in group['Status'].values
 def check_completion_icd(group):
@@ -117,9 +117,9 @@ def create_title(title, pdf):
 def create_section(title, pdf,style='i'):
     # Add main title
     pdf.set_font('Helvetica', style, 16)  
-    pdf.ln(10)
+    pdf.ln(5)
     pdf.write(5, title)
-    pdf.ln(10)
+    pdf.ln(5)
 
 def write_to_pdf(pdf, words):
     
@@ -145,35 +145,64 @@ def main():
 
     # Set context
     create_section("Report Context", pdf,'')
-    file = open("context.txt", "r")
+    file = open("./context/context.txt", "r")
     content = file.read()
     file.close()
     write_to_pdf(pdf, content)
-    pdf.ln(2)
     
     #closing
     create_section("Closing", pdf)
+    file = open("./context/closing.txt", "r")
+    content = file.read()
+    file.close()
+    write_to_pdf(pdf, content)
+    pdf.ln(5)
     closing,commitment = get_closing_commitment_data(directory)
     write_to_pdf(pdf, closing)
+    pdf.ln(10)
     #commitment
     create_section("Commitment", pdf)
+    file = open("./context/commitment.txt", "r")
+    content = file.read()
+    file.close()
+    write_to_pdf(pdf, content)
     write_to_pdf(pdf, commitment)
+    pdf.ln(10)
+    
     #icd
     create_section("ICD", pdf)
+    file = open("./context/icd.txt", "r")
+    content = file.read()
+    file.close()
+    write_to_pdf(pdf, content)
     icd = get_icd_data(directory)
     write_to_pdf(pdf, icd)
+    pdf.ln(10)
+    
     #ucd
     create_section("UCD", pdf)
+    file = open("./context/ucd.txt", "r")
+    content = file.read()
+    file.close()
+    write_to_pdf(pdf, content)
+    pdf.ln(5)
     ucd = get_ucd_data(directory)
     write_to_pdf(pdf, ucd)
+    pdf.ln(10)
+    
     #efolder
     create_section("eFolder", pdf)
+    file = open("./context/efolder.txt", "r")
+    content = file.read()
+    file.close()
+    write_to_pdf(pdf, content)
     efolder = get_efolder_data(directory)
     write_to_pdf(pdf, efolder)
+    pdf.ln(10)
     
     # Generate the PDF
     today = time.strftime("%d_%m_%Y")
-    pdf.output("completionRateReport_"+today+".pdf")
+    pdf.output(directory + "/completionRateReport_"+today+".pdf")
 
 if __name__ == "__main__":
     main()
