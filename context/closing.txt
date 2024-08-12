@@ -1,1 +1,4 @@
-- ASBF via API and Loan Lock via API went live 07/15
+3 exception scenarios detected:
+	- 409 error caused by loan locked by "<system>".
+	- Consumer connect contact window error (failure to add/close contact)
+	- Balancing docs/Texas review path is not robust. An update to how the ASBF got updated via API 2 weeks ago made the error noticeable.

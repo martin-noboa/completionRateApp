@@ -1,0 +1,2 @@
+- Business exceptions are not marked as completions yet.
+- Higher volume due to month's end.
