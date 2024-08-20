@@ -1,3 +1,5 @@
+from fpdf import FPDF
+
 class PDFSingleton:
 
     _instance = None
@@ -5,6 +7,7 @@ class PDFSingleton:
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super(PDFSingleton, cls).__new__(cls)
+            cls._instance.pdf = FPDF()
             cls._instance.setDefaultConfiguration()
         return cls._instance
 
@@ -37,38 +40,48 @@ class PDFSingleton:
             }
         }
 
-    def updateTextConfiguration(self, text_type, **kwargs):
+        self.letterheadConfiguration = {
+            'directory': "./resources/header.png",
+            'x':0,
+            'y':0,
+        }
+
+        self.lineHeight = 7
+        self.width = 210
+        self.height= 297
+
+
+    def updateTextConfiguration(self, textType, **kwargs):
         """
         Update the text configuration for a specific text type.
         
-        :param text_type: One of 'title', 'subtitle', 'section_header', 'body'.
+        :param textType: One of 'title', 'subtitle', 'section_header', 'body'.
         :param kwargs: Key-value pairs to update the configuration.
         """
-        if text_type in self.textConfiguration:
-            self.textConfiguration[text_type].update(kwargs)
+        if textType in self.textConfiguration:
+            self.textConfiguration[textType].update(kwargs)
         else:
-            raise ValueError(f"Invalid text type: {text_type}")
+            raise ValueError(f"Invalid text type: {textType}")
         
     
-    def updateLetterheadConfiguration(self, text_type, **kwargs):
+    def updateLetterheadConfiguration(self, textType, **kwargs):
         """
         Update the letterhead configuration.
         
         :param kwargs: Key-value pairs to update the configuration.
         """
-        self.textConfiguration[text_type].update(kwargs)
+        self.textConfiguration[textType].update(kwargs)
 
-        
 
-    def reset_text_config(self):
-        """Reset all text configurations to their default values."""
-        self._initialize_default_config()
+    def addPage(self):
+        self.pdf.add_page()
 
-    def build_pdf(self, content):
-        """Simulate building the PDF with the current configuration."""
-        print("Building PDF with the following text configurations:")
-        for text_type, config in self.textConfiguration.items():
-            print(f"{text_type.capitalize()} Config: {config}")
-        # Implement actual PDF generation logic here
-        print("PDF content:", content)
+    def writeToPDF (self, textType, text):
+        self.pdf.set_text_color(r=self.textConfiguration[textType]['color'][0],g=self.textConfiguration[textType]['color'][1],b=self.textConfiguration[textType]['color'][2])
+        self.pdf.set_font(self.textConfiguration[textType]['font'], self.textConfiguration[textType]['style'], self.textConfiguration[textType]['size'])
+        self.pdf.write(self.lineHeight, text)
+    
+    def addCoverletter (self):
+        self.pdf.image(self.letterheadConfiguration['directory'], self.letterheadConfiguration['x'], self.letterheadConfiguration['y'], self.width)
+            
 
