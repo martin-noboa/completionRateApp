@@ -101,3 +101,6 @@ class PDFSingleton:
     def build (self):
         self.pdf.output(self.directory + "completionRateReport_"+ self.endDate.strftime("%m_%d_%Y")+".pdf")
         print("Completion report built.")
+
+    def ln(self, space = 10):
+        self.pdf.ln(10)
