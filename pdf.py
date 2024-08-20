@@ -83,6 +83,8 @@ class PDFSingleton:
         """
         self.letterheadConfiguration.update(kwargs)
 
+    def getTimeRange(self):
+        return self.endDate.strftime("%m/%d/%Y") + " - " + self.startDate.strftime("%m/%d/%Y")
 
     def addPage(self):
         self.pdf.add_page()
