@@ -1,15 +1,10 @@
-from fpdf import FPDF
 import time
 import pandas as pd
 import sys
-from datetime import datetime,timedelta
 import warnings
 
 
-# Global Variables
-TITLE = "Weekly Completion Rate Report"
-WIDTH = 210
-HEIGHT = 297
+
 
 def check_completion_cls(group):
     return 'Completed' in group['Status'].values
@@ -122,7 +117,6 @@ def create_section(title, pdf,style='i'):
     pdf.ln(5)
 
 def write_to_pdf(pdf, words):
-    
     # Set text colour, font size, and font type
     pdf.set_text_color(r=0,g=0,b=0)
     pdf.set_font('Helvetica', '', 12)
@@ -178,12 +172,12 @@ def main():
     icd = get_icd_data(directory)
     write_to_pdf(pdf, icd)
     pdf.ln(10)
-    
     #ucd
-    create_section("UCD", pdf)
+    
     file = open("./context/ucd.txt", "r")
-    content = file.read()
+    create_section("UCD", pdf)
     file.close()
+    content = file.read()
     write_to_pdf(pdf, content)
     pdf.ln(5)
     ucd = get_ucd_data(directory)

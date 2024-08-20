@@ -1,39 +1,50 @@
 from fpdf import FPDF
+from datetime import datetime,timedelta
 
 class PDFSingleton:
 
     _instance = None
 
     def __new__(cls, *args, **kwargs):
+
+      
+
         if cls._instance is None:
             cls._instance = super(PDFSingleton, cls).__new__(cls)
             cls._instance.pdf = FPDF()
-            cls._instance.setDefaultConfiguration()
+              # Accessing custom configuration passed in kwargs
+            default_config = kwargs.get('defaultConfig', True)
+            cls._instance.directory = "./" + kwargs.get('date') + "/"
+            endDateStr = kwargs.get('date', '') + "-" + datetime.now().strftime("%Y")
+            cls._instance.endDate = datetime.strptime(endDateStr, "%d-%m-%Y").date()
+            cls._instance.startDate = cls._instance.endDate - timedelta(days=kwargs.get('timePeriod', 7))
+            if default_config:
+                cls._instance.setDefaultConfiguration()
         return cls._instance
 
     def setDefaultConfiguration(self):
         """Initialize default text configurations."""
         self.textConfiguration = {
             'title': {
-                'font': 'Arial',
+                'font': 'Helvetica',
                 'style': 'bold',
                 'size': 24,
                 'color': (0, 0, 0)  # Black color
             },
             'subtitle': {
-                'font': 'Arial',
+                'font': 'AriHelveticaal',
                 'style': 'italic',
                 'size': 18,
                 'color': (100, 100, 100)  # Dark grey color
             },
             'sectionHeader': {
-                'font': 'Arial',
+                'font': 'Helvetica',
                 'style': 'bold',
                 'size': 16,
                 'color': (50, 50, 50)  # Grey color
             },
             'body': {
-                'font': 'Arial',
+                'font': 'Helvetica',
                 'style': 'normal',
                 'size': 12,
                 'color': (0, 0, 0)  # Black color
@@ -64,13 +75,13 @@ class PDFSingleton:
             raise ValueError(f"Invalid text type: {textType}")
         
     
-    def updateLetterheadConfiguration(self, textType, **kwargs):
+    def updateLetterheadConfiguration(self, **kwargs):
         """
         Update the letterhead configuration.
         
         :param kwargs: Key-value pairs to update the configuration.
         """
-        self.textConfiguration[textType].update(kwargs)
+        self.letterheadConfiguration.update(kwargs)
 
 
     def addPage(self):
@@ -85,3 +96,6 @@ class PDFSingleton:
         self.pdf.image(self.letterheadConfiguration['directory'], self.letterheadConfiguration['x'], self.letterheadConfiguration['y'], self.width)
             
 
+    def build (self):
+        self.pdf.output(self.directory + "completionRateReport_"+ self.endDate.strftime("%m_%d_%Y")+".pdf")
+        print("Completion report built.")
