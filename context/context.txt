@@ -1,2 +1,3 @@
 - Completed items take only "happy path" into consideration, i.e. successfully handled business exceptions are still marked as exceptions.
-- Higher volume due to month's end.
+- Higher volume due to quarter end.
+- Production application server down since ~5am Est, recovered at around noon East.
