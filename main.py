@@ -13,6 +13,7 @@ def main():
      # Initialize PDFSingleton
     pdf = PDFSingleton(date=date, defaultConfig=True)
     pdf.addPage()
+    pdf.addCoverletter()
     pdf.writeToPDF('title', "Completion Rate Report")
     dateRange = pdf.getTimeRange() 
     pdf.writeToPDF('subtitle', dateRange)
@@ -20,41 +21,35 @@ def main():
     with open("./context/context.txt", "r") as file:
             content = file.read()
     pdf.writeToPDF("body", content) 
-    pdf.ln()
     # Closing
     pdf.writeToPDF('title', "Closing")
     with open("./context/closing.txt", "r") as file:
         content = file.read()
     pdf.writeToPDF("body", content)
-    pdf.ln()
     
     # Commitment
     pdf.writeToPDF('title', "Commitment")
     with open("./context/commitment.txt", "r") as file:
         content = file.read()
     pdf.writeToPDF("body", content)
-    pdf.ln()
     
     # ICD
     pdf.writeToPDF('title', "ICD")
     with open("./context/icd.txt", "r") as file:
         content = file.read()
     pdf.writeToPDF("body", content)
-    pdf.ln()
     
     # UCD
     pdf.writeToPDF('title', "UCD")
     with open("./context/ucd.txt", "r") as file:
         content = file.read()
     pdf.writeToPDF("body", content)
-    pdf.ln()
     
     # eFolder
     pdf.writeToPDF('title', "eFolder")
     with open("./context/efolder.txt", "r") as file:
         content = file.read()
     pdf.writeToPDF("body", content)
-    pdf.ln()
 
 # Build PDF
     pdf.build()

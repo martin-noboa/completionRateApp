@@ -15,8 +15,8 @@ class PDFSingleton:
               # Accessing custom configuration passed in kwargs
             default_config = kwargs.get('defaultConfig', True)
             cls._instance.directory = "./" + kwargs.get('date') + "/"
-            endDateStr = kwargs.get('date', '') + "-" + datetime.now().strftime("%Y")
-            cls._instance.endDate = datetime.strptime(endDateStr, "%d-%m-%Y").date()
+            endDateStr = kwargs.get('date') + "-" + datetime.now().strftime("%Y")
+            cls._instance.endDate = datetime.strptime(endDateStr, "%m-%d-%Y").date()
             cls._instance.startDate = cls._instance.endDate - timedelta(days=kwargs.get('timePeriod', 7))
             if default_config:
                 cls._instance.setDefaultConfiguration()
@@ -27,25 +27,25 @@ class PDFSingleton:
         self.textConfiguration = {
             'title': {
                 'font': 'Helvetica',
-                'style': 'bold',
-                'size': 24,
-                'color': (0, 0, 0)  # Black color
+                'style': 'b',
+                'size': 20,
+                'color': (0, 0, 0)   # Black color
             },
             'subtitle': {
-                'font': 'AriHelveticaal',
-                'style': 'italic',
-                'size': 18,
-                'color': (100, 100, 100)  # Dark grey color
+                'font': 'Helvetica',
+                'style': 'i',
+                'size': 16,
+                'color': (128,128,128)# Dark grey color
             },
             'sectionHeader': {
                 'font': 'Helvetica',
-                'style': 'bold',
+                'style': 'b',
                 'size': 16,
-                'color': (50, 50, 50)  # Grey color
+                'color': (128,128,128)
             },
             'body': {
                 'font': 'Helvetica',
-                'style': 'normal',
+                'style': '',
                 'size': 12,
                 'color': (0, 0, 0)  # Black color
             }
@@ -89,13 +89,15 @@ class PDFSingleton:
     def addPage(self):
         self.pdf.add_page()
 
-    def writeToPDF (self, textType, text):
+    def writeToPDF (self, textType, text,lineBreak = 10):
         self.pdf.set_text_color(r=self.textConfiguration[textType]['color'][0],g=self.textConfiguration[textType]['color'][1],b=self.textConfiguration[textType]['color'][2])
         self.pdf.set_font(self.textConfiguration[textType]['font'], self.textConfiguration[textType]['style'], self.textConfiguration[textType]['size'])
         self.pdf.write(self.lineHeight, text)
+        self.pdf.ln(lineBreak)
     
     def addCoverletter (self):
         self.pdf.image(self.letterheadConfiguration['directory'], self.letterheadConfiguration['x'], self.letterheadConfiguration['y'], self.width)
+        self.pdf.ln(30)
             
 
     def build (self):
@@ -103,4 +105,4 @@ class PDFSingleton:
         print("Completion report built.")
 
     def ln(self, space = 10):
-        self.pdf.ln(10)
+        self.pdf.ln(space)
