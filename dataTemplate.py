@@ -19,17 +19,17 @@ class dataTemplate(ABC):
         self.data["completedLoansCount"] = self.getCompletedLoans()
         self.data["businessExceptionsCount"] = self.getBusinessExceptions()
         self.data["exceptionsCount"] = self.getExceptions()
-        self.data["string"] = self.toString()
+        self.data["completionRate"] = self.completionRate()
 
         return self.data
-            
 
-
-    def toString(self) -> str:
+    def completionRate(self) -> float:
         if self.data["totalLoansCount"] == 0:
-            return "No loans available to process."
-        completionRate = self.data["completedLoansCount"] / self.data["totalLoansCount"]
-        return f"Total items Commitment: {self.data['totalLoansCount']} \n Completed items: {self.data['completedLoansCount']} \n Completion rate: {completionRate:.2%}"
+            return 0
+        totalLoans = self.data["completedLoansCount"] + self.data["businessExceptionsCount"]
+        print(type(totalLoans))
+        return float("{:.2f}".format((totalLoans/ self.data["totalLoansCount"])*100))
+        
 
     def getLoanCount(self) -> int:
         return len(self.data["cleanData"])
@@ -85,7 +85,8 @@ class Closing(dataTemplate):
     def loadData(self)-> pd.DataFrame:
         filename = 'clscmt.csv'
         data = pd.read_csv(self.directory+filename)
-        return data
+        closing = data[data['Tags'].str.contains('Closing')]
+        return closing
 
     def getCompletedLoans(self)-> int:
         return self.data["cleanData"]['Status'].apply(lambda status: status == 'Completed').sum()
@@ -94,7 +95,8 @@ class Commitment(dataTemplate):
     def loadData(self)-> pd.DataFrame:
         filename = 'clscmt.csv'
         data = pd.read_csv(self.directory+filename)
-        return data
+        commitment = data[data['Tags'].str.contains('Commitment')]
+        return commitment
 
     def getCompletedLoans(self)-> int:
         return self.data["cleanData"]['Status'].apply(lambda status: status == 'Complete').sum()

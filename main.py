@@ -1,6 +1,7 @@
 import sys
 import warnings
 from dataTemplate import ICD, UCD, EFolder, Closing, Commitment # Import data extraction classes
+from pdfSingleton import PDFSingleton
 
 def dataAbstraction(abstract_class_instance, directory) -> dict:
     return abstract_class_instance.template(directory)
@@ -37,7 +38,7 @@ def main():
         print(f"Completed Loans: {process_data['completedLoansCount']}")
         print(f"Business Exceptions: {process_data['businessExceptionsCount']}")
         print(f"Exceptions: {process_data['exceptionsCount']}")
-        print(f"Completion Rate: {process_data['completedLoansCount'] / process_data['totalLoansCount']:.2%}")
+        print(f"Completion Rate: {process_data['completionRate']}%")
 
 
 def createPDF(date):
