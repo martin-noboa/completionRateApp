@@ -6,9 +6,6 @@ class PDFSingleton:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
-
-      
-
         if cls._instance is None:
             cls._instance = super(PDFSingleton, cls).__new__(cls)
             cls._instance.pdf = FPDF()
