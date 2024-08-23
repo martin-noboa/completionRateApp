@@ -27,7 +27,6 @@ class dataTemplate(ABC):
         if self.data["totalLoansCount"] == 0:
             return 0
         totalLoans = self.data["completedLoansCount"] + self.data["businessExceptionsCount"]
-        print(type(totalLoans))
         return float("{:.2f}".format((totalLoans/ self.data["totalLoansCount"])*100))
         
 

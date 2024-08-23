@@ -11,7 +11,7 @@ class PDFSingleton:
             cls._instance.pdf = FPDF()
               # Accessing custom configuration passed in kwargs
             default_config = kwargs.get('defaultConfig', True)
-            cls._instance.directory = "./" + kwargs.get('date') + "/"
+            cls._instance.directory = "./resources/reports/" + kwargs.get('date') + "/"
             endDateStr = kwargs.get('date') + "-" + datetime.now().strftime("%Y")
             cls._instance.endDate = datetime.strptime(endDateStr, "%m-%d-%Y").date()
             cls._instance.startDate = cls._instance.endDate - timedelta(days=kwargs.get('timePeriod', 7))

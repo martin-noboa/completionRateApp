@@ -12,7 +12,7 @@ def main():
         print("Usage: python script.py <date>")
         sys.exit(1)
     date = sys.argv[1]
-    directory = "./" + date + "/"
+    directory = "./resources/reports/" + date + "/"
 
     # Map process names to their respective class instances
     processes = {
