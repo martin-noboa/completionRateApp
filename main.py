@@ -43,15 +43,21 @@ def principal():
     with open(contextFile, "r",encoding="utf-8") as file:
             globalContext = file.read()
     pdf.writeToPDF("body", globalContext) 
-
+    counter = 0
     for process in processes:
+        if counter == 3:
+            pdf.addPage()
+            counter = 0
         # title
         pdf.writeToPDF('sectionHeader', process["processName"])
         #context
         if len(process["context"]) > 0:
             pdf.writeToPDF("body", process["context"])
-        # build expression
+        # summary
         pdf.writeToPDF("body", process["summary"])
+        
+        counter += 1
+
     pdf.build()
 
 

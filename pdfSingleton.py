@@ -31,19 +31,19 @@ class PDFSingleton:
             'subtitle': {
                 'font': 'Helvetica',
                 'style': 'i',
-                'size': 16,
+                'size': 12,
                 'color': (128,128,128)# Dark grey color
             },
             'sectionHeader': {
                 'font': 'Helvetica',
                 'style': 'b',
-                'size': 16,
+                'size': 14,
                 'color': (128,128,128)
             },
             'body': {
                 'font': 'Helvetica',
                 'style': '',
-                'size': 12,
+                'size': 10,
                 'color': (0, 0, 0)  # Black color
             }
         }
