@@ -46,7 +46,7 @@ def principal():
 
     for process in processes:
         # title
-        pdf.writeToPDF('title', process["processName"])
+        pdf.writeToPDF('sectionHeader', process["processName"])
         #context
         pdf.writeToPDF("body", process["context"])
         # build expression
