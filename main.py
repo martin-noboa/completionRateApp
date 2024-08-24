@@ -1,93 +1,59 @@
+"""Module to interact with system directory."""
 import sys
+import os
 import warnings
-from dataTemplate import ICD, UCD, EFolder, Closing, Commitment # Import data extraction classes
+from dataTemplate import *
 from pdfSingleton import PDFSingleton
 
-def dataAbstraction(abstract_class_instance, directory) -> dict:
-    return abstract_class_instance.template(directory)
+def dataAbstraction(dataInstance, directory, contextDirectory) -> None :
+    """Instantiate dataTemplate abstract class."""
+    return dataInstance.template(directory,contextDirectory)
 
-def main():    
-    warnings.filterwarnings("ignore")
+def principal():    
+    """Main code."""
     if len(sys.argv) < 2:
         print("Usage: python script.py <date>")
         sys.exit(1)
     date = sys.argv[1]
-    directory = "./resources/reports/" + date + "/"
+    #directory = "./resources/reports/" + date + "/"
+    directory = os.path.join("resources", "reports", date)
+    print(directory)
+    contextDirectoy = os.path.join("resources", "context")
+    print(contextDirectoy)
 
-    # Map process names to their respective class instances
-    processes = {
-        "ICD": {"instance": ICD(), "data": None},
-        "UCD": {"instance": UCD(), "data": None},
-        "EFolder": {"instance": EFolder(), "data": None},
-        "Closing": {"instance": Closing(), "data": None},
-        "Commitment": {"instance": Commitment(), "data": None},
-    }
-    
     # Populate each process with its respective data
-    for process_name, process_info in processes.items():
-        abstract_class_instance = process_info["instance"]  # Get the class instance
-        processes[process_name]["data"] = dataAbstraction(abstract_class_instance, directory)  # Store the result in 'data'
+    icd = dataAbstraction(ICD(),directory,contextDirectoy)
+    ucd = dataAbstraction(UCD(),directory,contextDirectoy)
+    efolder = dataAbstraction(EFolder(),directory,contextDirectoy)
+    closing = dataAbstraction(Closing(),directory,contextDirectoy)
+    commitment = dataAbstraction(Commitment(),directory,contextDirectoy)
 
-    # Loop through the dictionary and access data for each process
-    for process_name, process_info in processes.items():
-        process_data = process_info["data"]
-        
-        # Print or access specific values
-        print(f"\nProcess: {process_name}")
-        print(f"Total Loans: {process_data['totalLoansCount']}")
-        print(f"Completed Loans: {process_data['completedLoansCount']}")
-        print(f"Business Exceptions: {process_data['businessExceptionsCount']}")
-        print(f"Exceptions: {process_data['exceptionsCount']}")
-        print(f"Completion Rate: {process_data['completionRate']}%")
+    processes = [icd,ucd,efolder,closing,commitment]
 
+    # Create pdf
 
-def createPDF(date):
-     # Initialize PDFSingleton
     pdf = PDFSingleton(date=date, defaultConfig=True)
     pdf.addPage()
     pdf.addCoverletter()
-    pdf.writeToPDF('title', "Completion Rate Report")
+    pdf.writeToPDF('title', "Weekly Completion Rate Report")
     dateRange = pdf.getTimeRange() 
     pdf.writeToPDF('subtitle', dateRange)
     pdf.writeToPDF('sectionHeader', "Report Context")
-    with open("./context/context.txt", "r") as file:
-            content = file.read()
-    pdf.writeToPDF("body", content) 
-    # Closing
-    pdf.writeToPDF('title', "Closing")
-    with open("./context/closing.txt", "r") as file:
-        content = file.read()
-    pdf.writeToPDF("body", content)
-    
-    # Commitment
-    pdf.writeToPDF('title', "Commitment")
-    with open("./context/commitment.txt", "r") as file:
-        content = file.read()
-    pdf.writeToPDF("body", content)
-    
-    # ICD
-    pdf.writeToPDF('title', "ICD")
-    with open("./context/icd.txt", "r") as file:
-        content = file.read()
-    pdf.writeToPDF("body", content)
-    
-    # UCD
-    pdf.writeToPDF('title', "UCD")
-    with open("./context/ucd.txt", "r") as file:
-        content = file.read()
-    pdf.writeToPDF("body", content)
-    
-    # eFolder
-    pdf.writeToPDF('title', "eFolder")
-    with open("./context/efolder.txt", "r") as file:
-        content = file.read()
-    pdf.writeToPDF("body", content)
+    contextFile =contextDirectoy + "/context.txt"
+    with open(contextFile, "r",encoding="utf-8") as file:
+            globalContext = file.read()
+    pdf.writeToPDF("body", globalContext) 
 
-# Build PDF
+    for process in processes:
+        # title
+        pdf.writeToPDF('title', process["processName"])
+        #context
+        pdf.writeToPDF("body", process["context"])
+        # build expression
+        pdf.writeToPDF("body", process["summary"])
     pdf.build()
-
-    
 
 
 if __name__ == "__main__":
-    main()
+    warnings.filterwarnings("ignore")
+    principal()
