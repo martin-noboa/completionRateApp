@@ -46,11 +46,11 @@ class dataTemplate(ABC):
         return self.data["totalLoansCount"] - (self.data["completedLoansCount"] + self.data["businessExceptionsCount"])
     
     def toString(self)->str:
-        return ("Total Loans: " + str({self.data['totalLoansCount']}) +
-                "\nCompleted Loans: " + str({self.data['completedLoansCount']}) +
-                "\nBusiness Exceptions: " + str({self.data['businessExceptionsCount']}) +
-                "\nExceptions: " + str({self.data['exceptionsCount']}) +
-                "\nCompletion Rate: " + str({self.data['completionRate']}))
+        return ("Total Loans: " + str(self.data['totalLoansCount']) +
+                "\nCompleted Loans: " + str(self.data['completedLoansCount']) +
+                "\nBusiness Exceptions: " + str(self.data['businessExceptionsCount']) +
+                "\nExceptions: " + str(self.data['exceptionsCount']) +
+                "\nCompletion Rate: " + str(self.data['completionRate']) +"%")
 
     @abstractmethod
     def loadData(self) -> pd.DataFrame:
