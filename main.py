@@ -48,7 +48,8 @@ def principal():
         # title
         pdf.writeToPDF('sectionHeader', process["processName"])
         #context
-        pdf.writeToPDF("body", process["context"])
+        if len(process["context"]) > 0:
+            pdf.writeToPDF("body", process["context"])
         # build expression
         pdf.writeToPDF("body", process["summary"])
     pdf.build()
