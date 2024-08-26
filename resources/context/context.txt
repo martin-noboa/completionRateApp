@@ -1,3 +1,3 @@
-- Completed items take only "happy path" into consideration, i.e. successfully handled business exceptions are still marked as exceptions.
-- Higher volume due to quarter end.
-- Production application server down since ~5am Est, recovered at around noon East.
+- Completion rate takes a business exceptions as a success since the path is handled accordingly.
+- Higher volume due to month end.
+- Production application server down on 08/19 for about 7 hours (~5am Est to ~12pm Est)

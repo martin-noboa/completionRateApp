@@ -1,3 +1,0 @@
-2 exception scenarios detected:
-	- 409 error caused by loan locked by "<system>".
-	- Consumer connect contact window error (failure to add/close contact) hot fix added 08/16

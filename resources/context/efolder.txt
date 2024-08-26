@@ -1,0 +1,1 @@
+- There are 2 scenarios categorized as business exceptions. All exceptions are currently marked as "System", this bug needs to be addressed to provide clarity on the number of business exceptions.
