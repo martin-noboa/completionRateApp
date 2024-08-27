@@ -6,3 +6,4 @@ Python script to transform raw CSV data from Blue Prism queue and extract comple
 - fpdf2   
 - dataframe_image   
 - datetime   
+- matplotlib
