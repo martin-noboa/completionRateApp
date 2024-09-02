@@ -1,8 +1,9 @@
 from datetime import timedelta
 
 
-def secondsToTimedelta(row):
-    minutes =row["Worktime"]/60
-    seconds = (row["Worktime"]%60)
+    
+def secondsToTimedelta(value):
+    minutes =value/60
+    seconds = value%60
     timespan = timedelta(minutes=minutes,seconds=seconds)
-    row["Worktime"] = timespan
+    return timespan

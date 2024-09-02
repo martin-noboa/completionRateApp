@@ -2,12 +2,8 @@
 import sys
 import os
 import warnings
-from dataTemplate import *
+from data import *
 from pdfSingleton import PDFSingleton
-
-def dataAbstraction(dataInstance, directory, contextDirectory) -> None :
-    """Instantiate dataTemplate abstract class."""
-    return dataInstance.template(directory,contextDirectory)
 
 def principal():    
     """Main code."""
@@ -17,21 +13,15 @@ def principal():
     date = sys.argv[1]
     #directory = "./resources/reports/" + date + "/"
     directory = os.path.join("resources", "reports", date)
-    print(directory)
-    contextDirectoy = os.path.join("resources", "context")
-    print(contextDirectoy)
-
+    contextDirectory = os.path.join("resources", "context")
     # Populate each process with its respective data
-    icd = dataAbstraction(ICD(),directory,contextDirectoy)
-    ucd = dataAbstraction(UCD(),directory,contextDirectoy)
-    efolder = dataAbstraction(EFolder(),directory,contextDirectoy)
-    closing = dataAbstraction(Closing(),directory,contextDirectoy)
-    commitment = dataAbstraction(Commitment(),directory,contextDirectoy)
+    icd = Data(directory+"/icd.csv","ICD","Complete")
+    ucd = Data(directory+"/ucd.csv","UCD","Completed")
+    closing = Data(directory+"/clscmt.csv","Closing Docs","Completed")
+    commitment = Data(directory+"/clscmt.csv","Commitment Letter","Complete")
 
-    processes = [icd,ucd,efolder,closing,commitment]
-
+    processes = [icd,ucd,closing,commitment]
     # Create pdf
-
     pdf = PDFSingleton(date=date, defaultConfig=True)
     pdf.addPage()
     pdf.addCoverletter()
@@ -39,27 +29,24 @@ def principal():
     dateRange = pdf.getTimeRange() 
     pdf.writeToPDF('subtitle', dateRange)
     pdf.writeToPDF('sectionHeader', "Report Context")
-    contextFile =contextDirectoy + "/context.txt"
+    contextFile = contextDirectory + "/context.txt"
     with open(contextFile, "r",encoding="utf-8") as file:
             globalContext = file.read()
     pdf.writeToPDF("body", globalContext) 
     counter = 0
     for process in processes:
-        if counter == 3:
-            pdf.addPage()
-            counter = 0
+        pdf.addPage()
         # title
-        pdf.writeToPDF('sectionHeader', process["processName"])
+        pdf.writeToPDF('sectionHeader', process.getProcess())
         #context
-        if len(process["context"]) > 0:
-            pdf.writeToPDF("body", process["context"])
+        context = process.getContext()
+        if len(context) > 0:
+            pdf.writeToPDF("body", context)
         # summary
-        pdf.writeToPDF("body", process["summary"])
-        
-        counter += 1
-
+        pdf.writeToPDF("body", process.toString())
+        pdf.writeToPDF("body", process.getAverageWorktimes())
     pdf.build()
-
+    
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
