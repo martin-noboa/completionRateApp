@@ -1,0 +1,4 @@
+Major sources of exceptions:
+- Close loan and Save loan actions are experiencing problems due to unexpected 409 errors in API confirmation. Fix currently in UAT.
+- Balancing Docs and Texas Review bug. Bug occuring in the handoff between Texas Review and Balancing docs. Fix currently in UAT.
+- Consumer Connect. Encompass is taking longer to load after adding a new contact at the Send step. Fix currently in UAT

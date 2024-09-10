@@ -39,7 +39,12 @@ def principal():
     with open(contextFile, "r",encoding="utf-8") as file:
             globalContext = file.read()
     pdf.writeToPDF("body", globalContext) 
-    counter = 0
+    pdf.writeToPDF('sectionHeader', "Stories")
+    storiesFile = contextDirectory + "/stories.txt"
+    with open(storiesFile, "r",encoding="utf-8") as file:
+            str = file.read()
+    pdf.writeToPDF("body", str) 
+    
     for process in processes:
         df = process.getData()
         cleanDf.append(df)
@@ -51,13 +56,17 @@ def principal():
         context = process.getContext()
         if len(context) > 0:
             pdf.writeToPDF("body", context)
+        
         # summary
+        pdf.writeToPDF('subtitle', "Developer Metrics")
         pdf.writeToPDF("body", process.toString())
         pdf.writeToPDF('subtitle', "Business Metrics")
         pdf.writeToPDF("body", process.businessToString())
         pdf.writeToPDF("body", process.getAverageWorktimes())
-        #pdf.addPage()
         pdf.addImage(plot)
+        #pdf.addPage()
+        
+        
     pdf.build()
     store(cleanDf,date)
 

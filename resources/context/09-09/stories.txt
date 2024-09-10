@@ -1,0 +1,12 @@
+UAT
+- STRY0411584: Redrawn field issue.
+- STRY0409174: Bal Docs and TX Review
+- STRY0409174: Consumer Connect
+- STRY0375888: Astro Service bot form API
+- STRY0384916: Commitment Bot is having issues completing loans.
+- STRY0395678: Using the lock API calls, we can confirm who has a lock on a loan.
+- STRY0399768: '?' Character in Comments
+
+Promoted to Prod
+- STRY0411328: CD doc not selected correctly (OCR issue)
+

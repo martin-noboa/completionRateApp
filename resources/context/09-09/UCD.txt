@@ -1,0 +1,2 @@
+- There was a single loan that got stuck from Saturday 31st until Monday 2nd. The runtime resource Blue Prism client appears to have gotten stuck during a routine reboot, showing the resource as Available for work when it was logged out. Around 200 instances were recorded in BP.
+- Business exceptions are not been marked as such, all are marked as System Exceptions.
