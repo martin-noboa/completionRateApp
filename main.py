@@ -53,6 +53,7 @@ def principal():
             pdf.writeToPDF("body", context)
         # summary
         pdf.writeToPDF("body", process.toString())
+        pdf.writeToPDF('subtitle', "Business Metrics")
         pdf.writeToPDF("body", process.businessToString())
         pdf.writeToPDF("body", process.getAverageWorktimes())
         #pdf.addPage()
@@ -61,5 +62,5 @@ def principal():
     store(cleanDf,date)
 
 if __name__ == "__main__":
-    warnings.filterwarnings("ignore")
+    #Sswarnings.filterwarnings("ignore")
     principal()

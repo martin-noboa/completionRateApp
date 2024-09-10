@@ -97,7 +97,7 @@ class PDFSingleton:
         self.pdf.ln(30)
     
     def addImage(self,image):
-        self.pdf.image(image, self.letterheadConfiguration['x'], 120, self.width)
+        self.pdf.image(image, self.letterheadConfiguration['x'], 140, self.width)
         self.pdf.ln(10)
             
 

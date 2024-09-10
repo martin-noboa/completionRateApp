@@ -43,8 +43,7 @@ class Data:
         exception = df['Status'].apply(lambda status: status == "Exception").sum()
         be = df['Status'].apply(lambda status: status == "Business Exception").sum()
         completionRate = float("{:.2f}".format((complete + be)/ total*100))
-        return ("Total instances: " + str(total) +
-                "\nCompleted: " + str(complete) +
+        return ("Completed: " + str(complete) +
                 "\nBusiness Exceptions: " + str(be) +
                 "\nExceptions: " + str(exception) +
                 "\nCompletion Rate: " + str(completionRate) + "%")
