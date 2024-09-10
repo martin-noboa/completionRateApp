@@ -4,6 +4,7 @@ import os
 import warnings
 from data import *
 from pdfSingleton import PDFSingleton
+from plot import *
 
 def principal():    
     """Main code."""
@@ -22,6 +23,7 @@ def principal():
 
     processes = [icd,ucd,closing,commitment]
     # Create pdf
+    
     pdf = PDFSingleton(date=date, defaultConfig=True)
     pdf.addPage()
     pdf.addCoverletter()
@@ -35,6 +37,8 @@ def principal():
     pdf.writeToPDF("body", globalContext) 
     counter = 0
     for process in processes:
+        df = process.getData()
+        path = countplot(df,directory,process.getProcess())
         pdf.addPage()
         # title
         pdf.writeToPDF('sectionHeader', process.getProcess())
@@ -45,6 +49,8 @@ def principal():
         # summary
         pdf.writeToPDF("body", process.toString())
         pdf.writeToPDF("body", process.getAverageWorktimes())
+        #pdf.addPage()
+        pdf.addImage(path)
     pdf.build()
     
 

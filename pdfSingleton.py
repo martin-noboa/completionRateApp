@@ -95,6 +95,10 @@ class PDFSingleton:
     def addCoverletter (self):
         self.pdf.image(self.letterheadConfiguration['directory'], self.letterheadConfiguration['x'], self.letterheadConfiguration['y'], self.width)
         self.pdf.ln(30)
+    
+    def addImage(self,image):
+        self.pdf.image(image, self.letterheadConfiguration['x'], 120, self.width)
+        self.pdf.ln(10)
             
 
     def build (self):

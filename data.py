@@ -17,7 +17,9 @@ class Data:
         count, _ = self.data[self.data["Status"] == status].shape
         return count
 
-
+    def getData(self):
+        return self.data
+    
     def toString(self):
         complete = self.getStatusCount("Complete")
         be = self.getStatusCount("Business Exception")
@@ -87,3 +89,4 @@ class Data:
 
     def getProcess(self):
         return self.process
+    

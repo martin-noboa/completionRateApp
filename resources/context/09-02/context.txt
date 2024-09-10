@@ -1,0 +1,7 @@
+- Analysis is now performed on a deeper level, there are 2 key metrics: completion rate and sucess rate:
+Completion rate refers to the percentage of Blue Prism instances that are completed or properly handle a business exception in relation to the total number of Blue Prism instances.
+Sucess rate is a business facing sucess metric, that measures sucess in terms of requests. A request is a loan that is triggered for a Blue Prism process to pick up, and if this request is completed within the established criteria (3 retries without human intervention), then it is considered a completion (not in current report, still under development)
+
+- Completion rate takes a business exceptions as a success since the path is handled accordingly.
+- Higher volume due to month end.
+- eFolder process retired since 08/21.
