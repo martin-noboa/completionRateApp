@@ -3,12 +3,14 @@ import os
 from helper import *
 
 class Data:
-    def __init__(self, path, process,completedKeyword) -> None:
+    def __init__(self, path, process,completedKeyword, tagFilter = None) -> None:
         self.path = path
         self.process = process
         self.completedKeyword = completedKeyword
+        self.tagFilter = tagFilter
         self.openFile()
         self.cleanUp()
+        self.store()
 
     def openFile(self):
         self.rawData = pd.read_csv(self.path)
@@ -74,12 +76,13 @@ class Data:
         return row
 
     def cleanUp(self, dropColumns=None):
+        self.data = self.rawData.copy()
         if dropColumns is None:
             dropColumns = ['Resource', 'Loaded', 'LastUpdated', 'Exception', 'Deferred',
                            'Completed', 'KeyValue', 'Priority', 'Attempt', 'Locked', 
                            'ExceptionReason', 'isLocked']
-
-        self.data = self.rawData.copy()
+        if self.tagFilter is not None:
+            self.data = self.data[self.data['Tags'].str.contains(self.tagFilter)]
         self.data['isLocked'] = self.data['Locked'].apply(lambda x: 1 if pd.notnull(x) else 0)
         self.data['Status'] = self.data['Status'].apply(lambda x: x if pd.notnull(x) else "Pending")
         self.data = self.data.apply(lambda row: self.setStatus(row), axis=1)
@@ -89,4 +92,7 @@ class Data:
 
     def getProcess(self):
         return self.process
+    
+    def store(self):
+        pass
     

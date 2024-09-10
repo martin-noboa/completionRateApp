@@ -18,8 +18,8 @@ def principal():
     # Populate each process with its respective data
     icd = Data(directory+"/icd.csv","ICD","Complete")
     ucd = Data(directory+"/ucd.csv","UCD","Completed")
-    closing = Data(directory+"/clscmt.csv","Closing Docs","Completed")
-    commitment = Data(directory+"/clscmt.csv","Commitment Letter","Complete")
+    closing = Data(directory+"/clscmt.csv","Closing Docs","Completed", "Closing")
+    commitment = Data(directory+"/clscmt.csv","Commitment Letter","Complete","Commitment")
 
     processes = [icd,ucd,closing,commitment]
     # Create pdf
@@ -38,7 +38,7 @@ def principal():
     counter = 0
     for process in processes:
         df = process.getData()
-        path = countplot(df,directory,process.getProcess())
+        plot = countplot(df,directory,process.getProcess())
         pdf.addPage()
         # title
         pdf.writeToPDF('sectionHeader', process.getProcess())
@@ -50,7 +50,7 @@ def principal():
         pdf.writeToPDF("body", process.toString())
         pdf.writeToPDF("body", process.getAverageWorktimes())
         #pdf.addPage()
-        pdf.addImage(path)
+        pdf.addImage(plot)
     pdf.build()
     
 
