@@ -1,7 +1,5 @@
 from datetime import timedelta
 
-
-    
 def secondsToTimedelta(value):
     minutes =value/60
     seconds = value%60
