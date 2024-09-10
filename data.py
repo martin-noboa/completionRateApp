@@ -13,7 +13,7 @@ class Data:
         self.cleanUp()
 
     def openFile(self):
-        directory = os.path.join("resources", "data", self.date, self.filename,".csv")
+        directory = os.path.join("resources", "data", self.date, self.filename)
         self.rawData = pd.read_csv(directory)
 
     def getStatusCount(self, status):
@@ -50,7 +50,7 @@ class Data:
                 "\nCompletion Rate: " + str(completionRate) + "%")
 
     def getContext(self):        
-        contextFile = os.path.join("resources", "context",self.date, self.process, ".txt")
+        contextFile = os.path.join("resources", "context",self.date, self.process+".txt")
         with open(contextFile, "r",encoding="utf-8") as file:
             context = file.read()
         return context

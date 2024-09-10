@@ -14,7 +14,7 @@ def principal():
         print("Usage: python script.py <date>")
         sys.exit(1)
     date = sys.argv[1]
-    contextDirectory = os.path.join("resources", "context")
+    contextDirectory = os.path.join("resources", "context",date)
     graphDirectory =  os.path.join("resources", "graphs",date)
     directoryCheck(graphDirectory)
     # Populate each process with its respective data
@@ -58,7 +58,7 @@ def principal():
         #pdf.addPage()
         pdf.addImage(plot)
     pdf.build()
-    store(cleanDf)
+    store(cleanDf,date)
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")

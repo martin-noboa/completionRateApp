@@ -6,5 +6,5 @@ def store(dataframes,date):
     print(warehouse)
     df = pd.concat(dataframes)
     df.to_csv(warehouse, encoding='utf-8', index=False, header=True)
-    print("Warehouse updated")
+    print("Warehouse updated.")
 
