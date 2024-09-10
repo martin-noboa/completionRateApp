@@ -11,10 +11,9 @@ class Data:
         self.tagFilter = tagFilter
         self.openFile()
         self.cleanUp()
-        self.store()
 
     def openFile(self):
-        directory = os.path.join("resources", "reports", self.date, self.filename,".csv")
+        directory = os.path.join("resources", "data", self.date, self.filename,".csv")
         self.rawData = pd.read_csv(directory)
 
     def getStatusCount(self, status):
@@ -29,6 +28,20 @@ class Data:
         be = self.getStatusCount("Business Exception")
         exception = self.getStatusCount("Exception")
         total =  complete + be + exception
+        completionRate = float("{:.2f}".format((complete + be)/ total*100))
+        return ("Total instances: " + str(total) +
+                "\nCompleted: " + str(complete) +
+                "\nBusiness Exceptions: " + str(be) +
+                "\nExceptions: " + str(exception) +
+                "\nCompletion Rate: " + str(completionRate) + "%")
+
+    def businessToString(self):
+        df = self.data.copy()
+        df = df.groupby('Id').last().reset_index()
+        total, _ = df.shape
+        complete = df['Status'].apply(lambda status: status == "Complete").sum()
+        exception = df['Status'].apply(lambda status: status == "Exception").sum()
+        be = df['Status'].apply(lambda status: status == "Business Exception").sum()
         completionRate = float("{:.2f}".format((complete + be)/ total*100))
         return ("Total instances: " + str(total) +
                 "\nCompleted: " + str(complete) +
@@ -61,7 +74,6 @@ class Data:
                 "\nAverage worktime completions: " + str(complete) +
                 "\nAverage worktime business exceptions: " + str(businessExceptions) +
                 "\nAverage worktime for exceptions: " + str(exceptions))
-        pass
 
     def setStatus(self, row):
         if pd.notnull(row["Tags"]) and "Business Exception" in row["Tags"]:
@@ -94,6 +106,4 @@ class Data:
     def getProcess(self):
         return self.process
     
-    def store(self):
-        pass
     

@@ -6,6 +6,7 @@ from data import *
 from pdfSingleton import PDFSingleton
 from plot import *
 from helper import directoryCheck
+from datawarehouse import store
 
 def principal():    
     """Main code."""
@@ -23,8 +24,10 @@ def principal():
     commitment = Data("clscmt.csv",date,"Commitment Letter","Complete","Commitment")
 
     processes = [icd,ucd,closing,commitment]
+    #store clean data
+    cleanDf = []
+
     # Create pdf
-    
     pdf = PDFSingleton(date=date, defaultConfig=True)
     pdf.addPage()
     pdf.addCoverletter()
@@ -39,6 +42,7 @@ def principal():
     counter = 0
     for process in processes:
         df = process.getData()
+        cleanDf.append(df)
         plot = countplot(df,graphDirectory,process.getProcess())
         pdf.addPage()
         # title
@@ -49,11 +53,12 @@ def principal():
             pdf.writeToPDF("body", context)
         # summary
         pdf.writeToPDF("body", process.toString())
+        pdf.writeToPDF("body", process.businessToString())
         pdf.writeToPDF("body", process.getAverageWorktimes())
         #pdf.addPage()
         pdf.addImage(plot)
     pdf.build()
-    
+    store(cleanDf)
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
