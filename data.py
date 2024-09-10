@@ -3,8 +3,9 @@ import os
 from helper import *
 
 class Data:
-    def __init__(self, path, process,completedKeyword, tagFilter = None) -> None:
-        self.path = path
+    def __init__(self, filename, date, process,completedKeyword, tagFilter = None) -> None:
+        self.filename = filename
+        self.date = date
         self.process = process
         self.completedKeyword = completedKeyword
         self.tagFilter = tagFilter
@@ -13,7 +14,8 @@ class Data:
         self.store()
 
     def openFile(self):
-        self.rawData = pd.read_csv(self.path)
+        directory = os.path.join("resources", "reports", self.date, self.filename,".csv")
+        self.rawData = pd.read_csv(directory)
 
     def getStatusCount(self, status):
         count, _ = self.data[self.data["Status"] == status].shape
@@ -35,8 +37,7 @@ class Data:
                 "\nCompletion Rate: " + str(completionRate) + "%")
 
     def getContext(self):        
-        contextDirectory = os.path.join("resources", "context")
-        contextFile = contextDirectory +  "/" + self.process + ".txt"
+        contextFile = os.path.join("resources", "context",self.date, self.process, ".txt")
         with open(contextFile, "r",encoding="utf-8") as file:
             context = file.read()
         return context

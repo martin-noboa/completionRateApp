@@ -5,6 +5,7 @@ import warnings
 from data import *
 from pdfSingleton import PDFSingleton
 from plot import *
+from helper import directoryCheck
 
 def principal():    
     """Main code."""
@@ -12,14 +13,14 @@ def principal():
         print("Usage: python script.py <date>")
         sys.exit(1)
     date = sys.argv[1]
-    #directory = "./resources/reports/" + date + "/"
-    directory = os.path.join("resources", "reports", date)
     contextDirectory = os.path.join("resources", "context")
+    graphDirectory =  os.path.join("resources", "graphs",date)
+    directoryCheck(graphDirectory)
     # Populate each process with its respective data
-    icd = Data(directory+"/icd.csv","ICD","Complete")
-    ucd = Data(directory+"/ucd.csv","UCD","Completed")
-    closing = Data(directory+"/clscmt.csv","Closing Docs","Completed", "Closing")
-    commitment = Data(directory+"/clscmt.csv","Commitment Letter","Complete","Commitment")
+    icd = Data("icd.csv",date,"ICD","Complete")
+    ucd = Data("ucd.csv",date,"UCD","Completed")
+    closing = Data("clscmt.csv",date,"Closing Docs","Completed", "Closing")
+    commitment = Data("clscmt.csv",date,"Commitment Letter","Complete","Commitment")
 
     processes = [icd,ucd,closing,commitment]
     # Create pdf
@@ -38,7 +39,7 @@ def principal():
     counter = 0
     for process in processes:
         df = process.getData()
-        plot = countplot(df,directory,process.getProcess())
+        plot = countplot(df,graphDirectory,process.getProcess())
         pdf.addPage()
         # title
         pdf.writeToPDF('sectionHeader', process.getProcess())
