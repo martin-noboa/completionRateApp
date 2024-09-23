@@ -1,0 +1,15 @@
+UAT
+- STRY0414313: PHH and Citi 
+- STRY0390760: 5th3rd and Truist
+
+Promoted to Prod
+- STRY0411328: CD doc not selected correctly (OCR issue)
+- STRY0406564 Elroy Closing Bot - MidTier Process Rebuild "navigate to pipeline"
+- STRY0409174 Elroy Closing Docs Bot: Handling for ECC page & API Call
+- STRY0411577 Elroy Closing Docs Bot Use LE2.X28 to choose Alternate CD
+- STRY0411584 Elroy Closing Bot: Small Fix for Redrawn Field being updated to current date
+- STRY0411588 Elroy Closing Bot: Add Lock Loan logic at start of process
+
+- STRY0410610 - Login Actions for Secondary Marketing sites
+
+- STRY0399768: '?' Character in Comments

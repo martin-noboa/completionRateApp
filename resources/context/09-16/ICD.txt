@@ -1,0 +1,1 @@
+- 08/19 error opening loans detected. Recovery after exception would cause Encompass to get stuck unable to open loans - marking them as incompletions. Fix in UAT 09/07.

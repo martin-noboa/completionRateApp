@@ -46,7 +46,7 @@ def principal():
     pdf.writeToPDF("body", str) 
     
     for process in processes:
-        df = process.getData()
+        df = process.getBusinessData()
         cleanDf.append(df)
         plot = countplot(df,graphDirectory,process.getProcess())
         pdf.addPage()
@@ -58,8 +58,8 @@ def principal():
             pdf.writeToPDF("body", context)
         
         # summary
-        pdf.writeToPDF('subtitle', "Developer Metrics")
-        pdf.writeToPDF("body", process.toString())
+        #pdf.writeToPDF('subtitle', "Developer Metrics")
+        #pdf.writeToPDF("body", process.toString())
         pdf.writeToPDF('subtitle', "Business Metrics")
         pdf.writeToPDF("body", process.businessToString())
         pdf.writeToPDF("body", process.getAverageWorktimes())

@@ -1,0 +1,1 @@
+- 09/18: New open loan action went live, addressing previous issue when closing/opening loan.

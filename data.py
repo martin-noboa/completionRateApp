@@ -36,8 +36,7 @@ class Data:
                 "\nCompletion Rate: " + str(completionRate) + "%")
 
     def businessToString(self):
-        df = self.data.copy()
-        df = df.groupby('Id').last().reset_index()
+        df = self.businessDf 
         total, _ = df.shape
         complete = df['Status'].apply(lambda status: status == "Complete").sum()
         exception = df['Status'].apply(lambda status: status == "Exception").sum()
@@ -100,9 +99,15 @@ class Data:
         self.data = self.data.apply(lambda row: self.setStatus(row), axis=1)
         self.data = self.data.drop(columns=dropColumns)
         self.data["Process"] = self.process
+        df = self.data.copy()
+        df = df.groupby('Id').last().reset_index()
+        self.businessDf = df
 
 
     def getProcess(self):
         return self.process
+    
+    def getBusinessData(self):
+        return self.businessDf
     
     

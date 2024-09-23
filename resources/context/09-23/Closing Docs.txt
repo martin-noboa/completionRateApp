@@ -1,0 +1,2 @@
+Major sources of exceptions:
+- Major update on 09/18. Stories specified above went live, however due to different versions of Encompass between UAT and Prod (OTP Update), hotfixes were needed to continue running the process smoothly. Last hotfix went live 09/20.

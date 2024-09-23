@@ -1,3 +1,2 @@
 - Sucess rate is a business facing sucess metric, that measures sucess in terms of requests. A request is a loan that is triggered for a Blue Prism process to pick up, and if this request is completed within the established criteria - 3 retries without human intervention -, then it is considered a completion (Encompass sucess rate)
 - Completion rate takes a business exceptions as a success since the path is handled accordingly.
-- eFolder process retired since 08/21.
